@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MemberService {
 	private final MemberRepository repository;
+
 	private final SkillService skillService;
 	private final TimeSlotService timeSlotService;
 
@@ -52,6 +53,14 @@ public class MemberService {
 	List<MemberRepresentation> getAll() {
 		return repository.findAll()
 			.stream()
+			.map(MemberRepresentation::new)
+			.collect(Collectors.toList());
+	}
+
+	List<MemberRepresentation> getAll(String skill) {
+		return repository.findAll()
+			.stream()
+			.filter(m -> m.getSkills().stream().anyMatch(s -> s.getName().equals(skill)))
 			.map(MemberRepresentation::new)
 			.collect(Collectors.toList());
 	}
