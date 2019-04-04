@@ -4,6 +4,7 @@ import ch.tamedia.hackdays.mapp.exception.ResourceNotFoundException;
 import ch.tamedia.hackdays.mapp.skill.SkillCreateDto;
 import ch.tamedia.hackdays.mapp.skill.SkillService;
 import ch.tamedia.hackdays.mapp.timeslot.TimeSlot;
+import ch.tamedia.hackdays.mapp.timeslot.TimeSlotCreateDto;
 import ch.tamedia.hackdays.mapp.timeslot.TimeSlotService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,13 +23,42 @@ public class MemberService {
 	private final TimeSlotService timeSlotService;
 
 	MemberRepresentation getMember(long id) {
-		var member = repository.findById(id)
-			.orElseThrow(() -> new ResourceNotFoundException(String.format("Member with id: %s does not exist.", id)));
+		var member = getMemberFromRepository(id);
 
 		return new MemberRepresentation(member);
 	}
 
-	public Member create() {
+	List<MemberRepresentation> getAll() {
+		return repository.findAll()
+			.stream()
+			.map(MemberRepresentation::new)
+			.collect(Collectors.toList());
+	}
+
+	List<MemberRepresentation> getAll(String skill) {
+		return repository.findAll()
+			.stream()
+			.filter(m -> m.getSkills().stream().anyMatch(s -> s.getName().equals(skill)))
+			.map(MemberRepresentation::new)
+			.collect(Collectors.toList());
+	}
+
+	public MemberRepresentation addTimeSlot(long id, TimeSlotCreateDto createDto) {
+		var timeSlot = timeSlotService.create(createDto);
+		var member = getMemberFromRepository(id);
+
+		member.getTimeSlots().add(timeSlot);
+		member = repository.save(member);
+
+		return new MemberRepresentation(member);
+	}
+
+	private Member getMemberFromRepository(long id) {
+		return repository.findById(id)
+			.orElseThrow(() -> new ResourceNotFoundException(String.format("Member with id: %s does not exist.", id)));
+	}
+
+	private Member create() {
 		var member = new Member();
 		member.setFirstName("Petar");
 		member.setUsername("ppan");
@@ -48,20 +78,5 @@ public class MemberService {
 		member.getTimeSlots().add(t2);
 
 		return repository.save(member);
-	}
-
-	List<MemberRepresentation> getAll() {
-		return repository.findAll()
-			.stream()
-			.map(MemberRepresentation::new)
-			.collect(Collectors.toList());
-	}
-
-	List<MemberRepresentation> getAll(String skill) {
-		return repository.findAll()
-			.stream()
-			.filter(m -> m.getSkills().stream().anyMatch(s -> s.getName().equals(skill)))
-			.map(MemberRepresentation::new)
-			.collect(Collectors.toList());
 	}
 }

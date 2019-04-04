@@ -11,4 +11,11 @@ public class TimeSlotService {
 	public TimeSlot create(TimeSlot timeSlot) {
 		return repository.save(timeSlot);
 	}
+
+	public TimeSlot create(TimeSlotCreateDto createDto) {
+		var timeSlot = new TimeSlot();
+		timeSlot.setDate(createDto.getDate());
+
+		return repository.save(timeSlot);
+	}
 }
