@@ -20,4 +20,7 @@ dependencies {
 	implementation 'org.liquibase:liquibase-core'
 	implementation 'mysql:mysql-connector-java'
 	implementation 'org.projectlombok:lombok'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'com.h2database:h2'
 }
