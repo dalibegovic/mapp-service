@@ -30,11 +30,21 @@ public class SessionService {
 		else {
 			mentee = memberService.getMemberFromRepositoryByUsernameName(createDto.getMenteeUsername());
 		}
+
+		if (mentee == null) {
+			throw new RuntimeException("Mentee cannot be null");
+		}
+
 		TimeSlot timeSlot = timeSlotService.get(createDto.getMentorTimeSlotId());
 		Skill skill = skillService.get(createDto.getSkillId());
 
 		mentor.getTimeSlots().remove(timeSlot);
 		mentor = memberService.update(mentor);
+
+		var session = sessionRepository.save(new Session(mentor, mentee, timeSlot, skill));
+		if (session.getParticipants().size() != 2) {
+			throw new RuntimeException("There must be 2 participants");
+		}
 
 		return new SessionRepresentation(sessionRepository.save(new Session(mentor, mentee, timeSlot, skill)));
 	}
