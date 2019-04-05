@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
-class MemberRepresentation {
+public class MemberRepresentation {
 	private final long id;
 
 	private final String firstName;
@@ -16,7 +16,7 @@ class MemberRepresentation {
 	private final List<SkillRepresentation> skills;
 	private final List<TimeSlotRepresentation> timeSlots;
 
-	MemberRepresentation(Member member) {
+	public MemberRepresentation(Member member) {
 		id = member.getId();
 		firstName = member.getFirstName();
 		username = member.getUsername();

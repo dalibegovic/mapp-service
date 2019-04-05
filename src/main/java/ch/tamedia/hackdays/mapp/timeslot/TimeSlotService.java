@@ -1,5 +1,6 @@
 package ch.tamedia.hackdays.mapp.timeslot;
 
+import ch.tamedia.hackdays.mapp.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,5 +18,10 @@ public class TimeSlotService {
 		timeSlot.setDate(createDto.getDate());
 
 		return repository.save(timeSlot);
+	}
+
+	public TimeSlot get(long id) {
+		return repository.findById(id)
+			.orElseThrow(() -> new ResourceNotFoundException(String.format("TimeSlot %s not found.", id)));
 	}
 }

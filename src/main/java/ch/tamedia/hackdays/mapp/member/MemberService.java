@@ -8,6 +8,7 @@ import ch.tamedia.hackdays.mapp.timeslot.TimeSlotCreateDto;
 import ch.tamedia.hackdays.mapp.timeslot.TimeSlotService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -53,30 +54,35 @@ public class MemberService {
 		return new MemberRepresentation(member);
 	}
 
-	private Member getMemberFromRepository(long id) {
+	public Member getMemberFromRepository(long id) {
 		return repository.findById(id)
 			.orElseThrow(() -> new ResourceNotFoundException(String.format("Member with id: %s does not exist.", id)));
 	}
 
-	private Member create() {
+	@Transactional
+	public Member createTestData() {
 		var member = new Member();
-		member.setFirstName("Petar");
-		member.setUsername("ppan");
-		var javaSkill = skillService.create(new SkillCreateDto("Java"));
-		var scalaSkill = skillService.create(new SkillCreateDto("Scala"));
+		member.setFirstName("Batman");
+		member.setUsername("bman");
+		var javaSkill = skillService.create(new SkillCreateDto("driving"));
+		var scalaSkill = skillService.create(new SkillCreateDto("killing"));
 
 		member.getSkills().add(skillService.get(javaSkill.getId()));
 		member.getSkills().add(skillService.get(scalaSkill.getId()));
 
 		TimeSlot t1 = new TimeSlot();
 		TimeSlot t2 = new TimeSlot();
-		t1.setDate(LocalDateTime.of(2019, Month.JANUARY, 5, 10, 0));
-		t2.setDate(LocalDateTime.of(2019, Month.JANUARY, 5, 12, 0));
+		t1.setDate(LocalDateTime.of(2019, Month.FEBRUARY, 10, 13, 0));
+		t2.setDate(LocalDateTime.of(2019, Month.MARCH, 5, 16, 0));
 		t1 = timeSlotService.create(t1);
 		t2 = timeSlotService.create(t2);
 		member.getTimeSlots().add(t1);
 		member.getTimeSlots().add(t2);
 
+		return repository.save(member);
+	}
+
+	public Member update(Member member) {
 		return repository.save(member);
 	}
 }
