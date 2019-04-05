@@ -23,7 +23,7 @@ public class MemberRepresentation {
 		firstName = member.getFirstName();
 		lastName = member.getLastName();
 		username = member.getUsername();
-		profilePictureLink = member.getImageLink();
+		profilePictureLink = member.getProfilePictureLink();
 
 		skills = member.getSkills()
 			.stream()
