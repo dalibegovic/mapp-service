@@ -1,6 +1,7 @@
 package ch.tamedia.hackdays.mapp.session;
 
 import ch.tamedia.hackdays.mapp.member.MemberRepresentation;
+import ch.tamedia.hackdays.mapp.skill.SkillRepresentation;
 import ch.tamedia.hackdays.mapp.timeslot.TimeSlotRepresentation;
 import lombok.Data;
 
@@ -9,6 +10,7 @@ public class SessionRepresentation {
 	private final MemberRepresentation mentor;
 	private final MemberRepresentation mentee;
 	private final TimeSlotRepresentation timeSlot;
+	private final SkillRepresentation skill;
 
 	public SessionRepresentation(Session s) {
 		this.mentor = new MemberRepresentation(s.getParticipants()
@@ -24,5 +26,6 @@ public class SessionRepresentation {
 			.orElseThrow(RuntimeException::new));
 
 		this.timeSlot = new TimeSlotRepresentation(s.getTimeSlot());
+		this.skill = new SkillRepresentation(s.getSkill());
 	}
 }

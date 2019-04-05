@@ -4,6 +4,7 @@ import ch.tamedia.hackdays.mapp.member.Member;
 import ch.tamedia.hackdays.mapp.skill.Skill;
 import ch.tamedia.hackdays.mapp.timeslot.TimeSlot;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Session {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

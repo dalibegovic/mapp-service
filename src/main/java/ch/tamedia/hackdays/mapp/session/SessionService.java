@@ -10,6 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class SessionService {
@@ -29,5 +32,12 @@ public class SessionService {
 		mentor = memberService.update(mentor);
 
 		return new SessionRepresentation(sessionRepository.save(new Session(mentor, mentee, timeSlot, skill)));
+	}
+
+	public List<SessionRepresentation> getAll() {
+		return sessionRepository.findAll()
+			.stream()
+			.map(SessionRepresentation::new)
+			.collect(Collectors.toList());
 	}
 }
