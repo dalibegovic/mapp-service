@@ -12,6 +12,7 @@ public class MemberRepresentation {
 	private final long id;
 
 	private final String firstName;
+	private final String lastName;
 	private final String username;
 	private final List<SkillRepresentation> skills;
 	private final List<TimeSlotRepresentation> timeSlots;
@@ -19,6 +20,7 @@ public class MemberRepresentation {
 	public MemberRepresentation(Member member) {
 		id = member.getId();
 		firstName = member.getFirstName();
+		lastName = member.getLastName();
 		username = member.getUsername();
 
 		skills = member.getSkills()
