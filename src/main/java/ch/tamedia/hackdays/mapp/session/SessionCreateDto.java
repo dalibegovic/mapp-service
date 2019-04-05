@@ -9,7 +9,10 @@ public class SessionCreateDto {
 	private int mentorId;
 
 	@JsonProperty
-	private int menteeId;
+	private Integer menteeId;
+
+	@JsonProperty
+	private String menteeUsername;
 
 	@JsonProperty
 	private int mentorTimeSlotId;

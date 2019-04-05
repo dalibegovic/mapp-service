@@ -24,7 +24,12 @@ public class SessionService {
 	@Transactional
 	public SessionRepresentation create(SessionCreateDto createDto) {
 		Member mentor = memberService.getMemberFromRepository(createDto.getMentorId());
-		Member mentee = memberService.getMemberFromRepository(createDto.getMenteeId());
+		Member mentee;
+		if (createDto.getMenteeId() != null)
+			mentee = memberService.getMemberFromRepository(createDto.getMenteeId());
+		else {
+			mentee = memberService.getMemberFromRepositoryByUsernameName(createDto.getMenteeUsername());
+		}
 		TimeSlot timeSlot = timeSlotService.get(createDto.getMentorTimeSlotId());
 		Skill skill = skillService.get(createDto.getSkillId());
 

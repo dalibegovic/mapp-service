@@ -29,7 +29,7 @@ public class Member {
 	@Column(name = "last_name")
 	private String lastName;
 
-	@Column(name = "username")
+	@Column(name = "username", unique = true)
 	private String username;
 
 	@ManyToMany

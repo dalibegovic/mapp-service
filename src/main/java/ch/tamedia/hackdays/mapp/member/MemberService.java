@@ -59,6 +59,11 @@ public class MemberService {
 			.orElseThrow(() -> new ResourceNotFoundException(String.format("Member with id: %s does not exist.", id)));
 	}
 
+	public Member getMemberFromRepositoryByUsernameName(String username) {
+		return repository.findByUsername(username)
+			.orElseThrow(() -> new ResourceNotFoundException(String.format("Member with name: %s does not exist.", username)));
+	}
+
 	@Transactional
 	public Member createTestData() {
 		var member = new Member();
