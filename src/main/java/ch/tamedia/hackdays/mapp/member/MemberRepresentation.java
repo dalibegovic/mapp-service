@@ -14,6 +14,7 @@ public class MemberRepresentation {
 	private final String firstName;
 	private final String lastName;
 	private final String username;
+	private final String profilePictureLink;
 	private final List<SkillRepresentation> skills;
 	private final List<TimeSlotRepresentation> timeSlots;
 
@@ -22,6 +23,7 @@ public class MemberRepresentation {
 		firstName = member.getFirstName();
 		lastName = member.getLastName();
 		username = member.getUsername();
+		profilePictureLink = member.getImageLink();
 
 		skills = member.getSkills()
 			.stream()

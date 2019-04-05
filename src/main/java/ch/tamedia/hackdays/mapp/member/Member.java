@@ -32,6 +32,9 @@ public class Member {
 	@Column(name = "username", unique = true)
 	private String username;
 
+	@Column(name = "profile_picture_link")
+	private String profilePictureLink;
+
 	@ManyToMany
 	@JoinTable(
 		name = "member_skill",
