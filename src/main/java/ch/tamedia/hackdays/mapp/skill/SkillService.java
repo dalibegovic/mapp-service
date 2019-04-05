@@ -5,6 +5,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class SkillService {
@@ -23,5 +26,13 @@ public class SkillService {
 	public Skill get(long id) {
 		return repository.findById(id)
 			.orElseThrow(() -> new ResourceNotFoundException(String.format("Skill %s is not found", id)));
+	}
+
+	public List<SkillRepresentation> getAll() {
+		return repository.findAll()
+			.stream()
+			.map(SkillRepresentation::new)
+			.collect(Collectors.toList());
+
 	}
 }
